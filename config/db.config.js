@@ -1,4 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
+require('dotenv').config()
+
 const banksModel = require("../src/models/banks.model");
 const brandsModel = require("../src/models/brands.model");
 const cargoModel = require("../src/models/cargo.model");
@@ -33,26 +35,29 @@ const status_list_typesModel = require("../src/models/status_list_types.model");
 const storesModel = require("../src/models/stores.model");
 const usersModel = require("../src/models/users.model");
  
-const sequelize = new Sequelize('ecommerce', 'root', '12345678', {
-    host: 'localhost',
-    dialect:'mysql', 
-    logging: console.log,
-    define: {
-      id:false,
-      freezeTableName: true,
-      hasTrigger : false,
-      force: false,
-      alter: false,
-      timestamps: false,
-      createdAt: false,
-      updatedAt: false,
-    }
-    /*dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false,
-        },
-    },*/
+const sequelize = new Sequelize(
+    process.env.DB_NAME, 
+    process.env.DB_USERNAME, 
+    process.env.DB_PASSWORD, {
+      host: process.env.DB_HOST,
+      dialect:process.env.DB_DIALECT, 
+      logging: console.log,
+      define: {
+        id:false,
+        freezeTableName: true,
+        hasTrigger : false,
+        force: false,
+        alter: false,
+        timestamps: false,
+        createdAt: false,
+        updatedAt: false,
+      }
+      /*dialectOptions: {
+          ssl: {
+              require: true,
+              rejectUnauthorized: false,
+          },
+      },*/
 });
 (async () => await sequelize.sync({ alter: false, force : false, freezeTableName: true,}))();
 

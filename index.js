@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const routers = require('./src/routes/route')
 const basicAuth = require('express-basic-auth')
+require('dotenv').config()
+
 
 const app = express() 
 const port = process.env.PORT || 6001;
@@ -17,7 +19,7 @@ app.use(bodyParser.json())
 app.use(basicAuth({
     users: {
         // username - password
-        'root': 'u1FqShNcPIr!5B$Z$aF9S3138e^VKB6'
+        [process.env.AUTH_USER]: process.env.AUTH_PASS
     }, 
     unauthorizedResponse: (req) => { 
         return req.auth ? { success: true, message: 'doğrulanamadı' } : ''
